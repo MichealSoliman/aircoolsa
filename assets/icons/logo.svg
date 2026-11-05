@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" fill="none" class="w-auto h-10 md:h-12" aria-labelledby="logoTitle">
+  <title id="logoTitle">شعار شركة إير كول للمكيفات بجدة</title>
+  <!-- Cooling Wind & Snowflake Icon -->
+  <g transform="translate(10, 6)">
+    <!-- Outer Breeze Curve -->
+    <path d="M4 14C12 6 26 4 36 12C46 20 40 36 28 38C18 40 10 32 12 24C14 16 24 16 28 20" stroke="#35C6F4" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <!-- Inner Cool Flow -->
+    <path d="M8 28C16 38 34 38 42 28C48 20 44 8 32 8" stroke="#1677D2" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Snowflake Crystals / Spark -->
+    <circle cx="26" cy="24" r="3.5" fill="#35C6F4"/>
+    <path d="M26 15V33M17 24H35M20 18L32 30M20 30L32 18" stroke="#102A43" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text Brand Arabic & English -->
+  <g transform="translate(68, 12)">
+    <!-- Arabic Main Text -->
+    <text x="0" y="24" font-family="'Cairo', 'Tajawal', sans-serif" font-weight="900" font-size="24" fill="#102A43">
+      إيــــر كــــول
+    </text>
+    <text x="145" y="23" font-family="'Cairo', 'Tajawal', sans-serif" font-weight="700" font-size="14" fill="#1677D2">
+      للمكيفات بجدة
+    </text>
+    <!-- Subtitle / English Tagline -->
+    <text x="2" y="39" font-family="system-ui, sans-serif" font-weight="700" font-size="9.5" letter-spacing="2.5" fill="#627D98">
+      AIR COOL JEDDAH HVAC
+    </text>
+  </g>
+</svg>

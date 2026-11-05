@@ -1,0 +1,1119 @@
+# -*- coding: utf-8 -*-
+import json
+import os
+
+# Single source of truth for FAQs
+faq_items = [
+    {
+        "id": "faq-1",
+        "q": "كم سعر تنظيف مكيف سبليت في جدة؟",
+        "a": "يبدأ تنظيف مكيف السبليت الواحد من 150 ريال (وحدة داخلية وخارجية)، ويقل سعر المكيف عند التعدد: 120 ريال لـ 2-3 مكيفات، و100 ريال لـ 4-7، و80 ريال لـ 8 فأكثر. السعر النهائي بعد معرفة نوع المكيف وعدده."
+    },
+    {
+        "id": "faq-2",
+        "q": "هل يتسخ الجدار أو الأثاث أثناء الغسيل؟",
+        "a": "نستخدم كيس غسيل عازلاً متصلاً بخرطوم تصريف إلى حاوية، ونغطي اللوحة الإلكترونية والأسلاك قبل الرش، فيقل تطاير المياه كثيراً. ننصح بإبعاد الأثاث القريب أو تغطيته."
+    },
+    {
+        "id": "faq-3",
+        "q": "كم مرة ينبغي تنظيف المكيف سنوياً في جدة؟",
+        "a": "نوصي بغسيل متخصص مرتين سنوياً (قبل الصيف وفي منتصفه) مع تنظيف الفلاتر المنزلية بانتظام لمواجهة الرطوبة والأتربة في مناخ جدة."
+    },
+    {
+        "id": "faq-4",
+        "q": "هل يشمل التنظيف الوحدة الخارجية وتسليك الصرف؟",
+        "a": "نعم، يشمل تنظيف الوحدة الداخلية والخارجية وضخ المياه لتسليك مجرى وحوض التصريف لضمان انسياب المياه وتفادي التسريب الداخلي."
+    },
+    {
+        "id": "faq-5",
+        "q": "كم يستغرق تنظيف المكيف الواحد؟",
+        "a": "يختلف الوقت حسب حالة الجهاز ونوعه، ويستغرق تنظيف مكيف السبليت العادي في المتوسط ما بين 25 إلى 40 دقيقة شاملاً فك الأغطية والغسيل وتسليك الصرف والتجفيف واختبار التبريد."
+    },
+    {
+        "id": "faq-6",
+        "q": "هل تنظفون المكيف الدولابي والمخفي والكاسيت والشباك؟",
+        "a": "نعم، نقوم بغسيل وتنظيف مكيفات السبليت الجداري والدولابي والمخفي (الكونسيلد) والكاسيت والشباك، وتُحدد تفاصيل الخدمة والتكلفة بعد معرفة نوع الجهاز ومعاينته."
+    },
+    {
+        "id": "faq-7",
+        "q": "ما الفرق بين تنظيف المكيف وتعقيمه؟",
+        "a": "التنظيف يزيل الأتربة والرواسب الطينية العالقة بالمبخر وحوض الصرف، بينما التعقيم معالجة إضافية بمواد مخصصة للمكيفات للمساعدة على إزالة الروائح الناتجة عن رطوبة جدة."
+    },
+    {
+        "id": "faq-8",
+        "q": "هل الغسيل بالضغط يضر بالمكيف؟",
+        "a": "لا يضر إذا نُفذ بضغط محسوب ومناسب للزعانف مع حماية اللوحة الإلكترونية؛ الضرر ينتج فقط عن استخدام ضغط مفرط يثني الزعانف أو رش الأجزاء الكهربائية."
+    },
+    {
+        "id": "faq-9",
+        "q": "هل أحتاج لتجهيز شيء قبل وصول الفني؟",
+        "a": "يُفضل إخلاء المساحة الواقعة مباشرة أسفل المكيف وإبعاد القطع الحساسة أو تغطيتها، وتوفير مصدر مياه وكهرباء قريب، وتسهيل الوصول للوحدة الخارجية."
+    }
+]
+
+# Single Schema @graph
+schema_data = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebPage",
+            "@id": "https://aircoolsa.com/ac-cleaning-jeddah/#webpage",
+            "url": "https://aircoolsa.com/ac-cleaning-jeddah/",
+            "name": "تنظيف مكيفات بجدة | غسيل مكيفات سبليت بأسعار واضحة | إير كول",
+            "inLanguage": "ar",
+            "isPartOf": {
+                "@id": "https://aircoolsa.com/#website"
+            },
+            "breadcrumb": {
+                "@id": "https://aircoolsa.com/ac-cleaning-jeddah/#breadcrumb"
+            },
+            "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": "https://aircoolsa.com/assets/images/ac-cleaning.webp"
+            }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://aircoolsa.com/ac-cleaning-jeddah/#breadcrumb",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "الرئيسية",
+                    "item": "https://aircoolsa.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "الخدمات",
+                    "item": "https://aircoolsa.com/services/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "تنظيف مكيفات بجدة",
+                    "item": "https://aircoolsa.com/ac-cleaning-jeddah/"
+                }
+            ]
+        },
+        {
+            "@type": "Service",
+            "@id": "https://aircoolsa.com/ac-cleaning-jeddah/#service",
+            "name": "تنظيف مكيفات بجدة",
+            "serviceType": "تنظيف وغسيل المكيفات",
+            "url": "https://aircoolsa.com/ac-cleaning-jeddah/",
+            "description": "غسيل مكيفات سبليت ودولابي بمضخة ضغط وأكياس عزل مع تسليك الصرف في جدة.",
+            "provider": {
+                "@type": "HVACBusiness",
+                "@id": "https://aircoolsa.com/#business",
+                "name": "إير كول",
+                "url": "https://aircoolsa.com/",
+                "telephone": "+966533553620"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "جدة"
+            },
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "أسعار تنظيف المكيفات بجدة",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "تنظيف مكيف سبليت واحد"
+                        },
+                        "priceSpecification": {
+                            "@type": "UnitPriceSpecification",
+                            "price": "150",
+                            "priceCurrency": "SAR",
+                            "unitText": "للمكيف الواحد"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "تنظيف من 2 إلى 3 مكيفات"
+                        },
+                        "priceSpecification": {
+                            "@type": "UnitPriceSpecification",
+                            "price": "120",
+                            "priceCurrency": "SAR",
+                            "unitText": "للمكيف الواحد"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "تنظيف من 4 إلى 7 مكيفات"
+                        },
+                        "priceSpecification": {
+                            "@type": "UnitPriceSpecification",
+                            "price": "100",
+                            "priceCurrency": "SAR",
+                            "unitText": "للمكيف الواحد"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "تنظيف 8 مكيفات فأكثر"
+                        },
+                        "priceSpecification": {
+                            "@type": "UnitPriceSpecification",
+                            "price": "80",
+                            "priceCurrency": "SAR",
+                            "unitText": "للمكيف الواحد"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "غسيل وتعقيم المكيف"
+                        },
+                        "priceSpecification": {
+                            "@type": "UnitPriceSpecification",
+                            "price": "140",
+                            "priceCurrency": "SAR",
+                            "unitText": "للمكيف الواحد"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": item["q"],
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": item["a"]
+                    }
+                } for item in faq_items
+            ]
+        }
+    ]
+}
+
+faq_html_blocks = []
+for idx, item in enumerate(faq_items):
+    faq_html_blocks.append(f'''          <!-- FAQ Item {idx+1} -->
+          <details class="group bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sm:p-6 transition-all duration-200 open:border-brand-blue">
+            <summary class="font-bold text-base sm:text-lg text-brand-dark cursor-pointer list-none flex items-center justify-between gap-4 focus:outline-none">
+              <span>{item['q']}</span>
+              <span class="w-7 h-7 rounded-full bg-brand-light flex items-center justify-center text-brand-blue group-open:rotate-180 transition-transform flex-shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+              </span>
+            </summary>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-slate-600 text-sm sm:text-base leading-relaxed">
+              <p>{item['a']}</p>
+            </div>
+          </details>''')
+
+faq_section_html = "\n".join(faq_html_blocks)
+
+html_content = f'''<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تنظيف مكيفات بجدة | غسيل مكيفات سبليت بأسعار واضحة | إير كول</title>
+  <meta name="description"
+    content="تنظيف مكيفات بجدة: غسيل سبليت ودولابي بمضخة ضغط وأكياس عزل لحماية الجدران والأثاث، وتسليك الصرف وإزالة الروائح. أسعار واضحة، اتصل 0533553620">
+  <link rel="canonical" href="https://aircoolsa.com/ac-cleaning-jeddah/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="إير كول">
+  <meta property="og:title" content="تنظيف مكيفات بجدة | غسيل مكيفات سبليت بأسعار واضحة | إير كول">
+  <meta property="og:description"
+    content="تنظيف مكيفات بجدة: غسيل سبليت ودولابي بمضخة ضغط وأكياس عزل لحماية الجدران والأثاث، وتسليك الصرف وإزالة الروائح. أسعار واضحة، اتصل 0533553620">
+  <meta property="og:url" content="https://aircoolsa.com/ac-cleaning-jeddah/">
+  <meta property="og:image" content="https://aircoolsa.com/assets/images/og-cleaning.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="تنظيف وغسيل مكيفات سبليت بجدة بأكياس العزل ومضخات الضغط">
+  <meta property="og:locale" content="ar_SA">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="تنظيف مكيفات بجدة | غسيل مكيفات سبليت بأسعار واضحة | إير كول">
+  <meta name="twitter:description"
+    content="تنظيف مكيفات بجدة: غسيل سبليت ودولابي بمضخة ضغط وأكياس عزل لحماية الجدران والأثاث، وتسليك الصرف وإزالة الروائح. أسعار واضحة، اتصل 0533553620">
+  <meta name="twitter:image" content="https://aircoolsa.com/assets/images/og-cleaning.jpg">
+
+  <!-- Favicon & Touch Icon -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1677D2">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=[TO_CONFIRM: GA4_ID]"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '[TO_CONFIRM: GA4_ID]');
+  </script>
+
+  <!-- Schema: Single @graph JSON-LD -->
+  <script type="application/ld+json">
+{json.dumps(schema_data, ensure_ascii=False, indent=2)}
+  </script>
+</head>
+
+<body class="bg-brand-light text-brand-dark min-h-screen flex flex-col antialiased pb-20 lg:pb-0">
+
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-blue focus:text-white focus:rounded-lg shadow-lg">
+    تخطي إلى المحتوى الرئيسي
+  </a>
+
+  <!-- Top Announcement Bar -->
+  <div id="topBar" class="bg-brand-navy text-slate-200 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 text-brand-cyan font-medium">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          نطاق الخدمة: جميع أحياء مدينة جدة
+        </span>
+        <span class="hidden md:inline-block text-slate-600">|</span>
+        <span class="hidden md:inline-block text-slate-300">مواعيد العمل: السبت - الخميس (8 ص - 10 م) | الجمعة (1 ظ - 10 م)</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-bold">
+        <a href="tel:+966533553620" class="hover:text-brand-cyan transition-colors flex items-center gap-1.5" data-loc="header">
+          <svg class="w-3.5 h-3.5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span>0533553620</span>
+        </a>
+        <a href="https://wa.me/966533553620" target="_blank" rel="noopener noreferrer"
+          class="text-brand-whatsapp hover:underline flex items-center gap-1 font-semibold" data-loc="header">
+          واتساب مباشر
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="siteHeader" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md transition-all duration-300 border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-blue rounded-lg p-1 flex-shrink-0" aria-label="إير كول - الصفحة الرئيسية">
+          <img src="/assets/images/logo.webp" alt="إير كول" width="147" height="99" class="h-11 md:h-13 w-auto object-contain">
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-5 xl:gap-8 text-sm font-bold text-slate-700" aria-label="روابط الموقع الرئيسية">
+          <a href="/" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">الرئيسية</a>
+          <a href="/services/" class="text-brand-blue border-b-2 border-brand-blue py-1 transition-colors whitespace-nowrap" aria-current="page">خدماتنا</a>
+          <a href="#pricing-table" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">الأسعار</a>
+          <a href="#districts-coverage" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">أحياء جدة</a>
+          <a href="/about/" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">من نحن</a>
+          <a href="/blog/" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">المدونة والنصائح</a>
+          <a href="/contact/" class="hover:text-brand-blue py-1 transition-colors whitespace-nowrap">تواصل معنا</a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="hidden sm:flex items-center gap-2.5 flex-shrink-0">
+          <a href="https://wa.me/966533553620" target="_blank" rel="noopener noreferrer"
+            class="btn-whatsapp text-xs sm:text-sm py-2 px-3 sm:px-4 shadow-sm" aria-label="تواصل مع فني تكييف عبر واتساب" data-loc="header">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>واتساب</span>
+          </a>
+          <a href="tel:+966533553620" class="btn-primary text-xs sm:text-sm py-2 px-3 sm:px-4 shadow-sm"
+            aria-label="اتصال هاتفي مباشر بفني المكيفات" data-loc="header">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <span>0533553620</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden flex items-center">
+          <button id="mobileMenuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu"
+            class="p-2 rounded-xl text-brand-dark hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            aria-label="فتح القائمة الرئيسية">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu Overlay -->
+  <div id="mobileMenuOverlay" class="fixed inset-0 bg-brand-dark/60 z-50 hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" aria-hidden="true"></div>
+
+  <!-- Mobile Drawer Menu -->
+  <nav id="mobileMenu"
+    class="fixed top-0 right-0 bottom-0 w-80 max-w-[85%] bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl flex flex-col justify-between p-6 overflow-y-auto"
+    aria-label="قائمة الهاتف المحمول" aria-hidden="true" inert>
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+        <img src="/assets/images/logo.webp" alt="إير كول" width="147" height="99" class="h-9 w-auto object-contain">
+        <button id="mobileMenuCloseBtn" type="button"
+          class="p-2 text-slate-500 hover:text-brand-dark rounded-lg hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-blue" aria-label="إغلاق القائمة">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-6 font-bold text-slate-700">
+        <a href="/" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">الرئيسية</a>
+        <a href="/services/" class="px-4 py-3 rounded-xl bg-brand-light text-brand-blue">جميع الخدمات</a>
+        <div class="pr-4 flex flex-col gap-1.5 text-xs font-semibold text-slate-600 border-r-2 border-brand-cyan/40 my-1">
+          <a href="/ac-cleaning-jeddah/" class="py-1 text-brand-blue font-bold">تنظيف وغسيل مكيفات</a>
+          <a href="/ac-maintenance-jeddah/" class="py-1 hover:text-brand-blue">صيانة مكيفات</a>
+          <a href="/ac-installation-jeddah/" class="py-1 hover:text-brand-blue">فك وتركيب مكيفات</a>
+          <a href="/ac-sanitization-jeddah/" class="py-1 hover:text-brand-blue">تعقيم مكيفات</a>
+          <a href="/ac-gas-refilling-jeddah/" class="py-1 hover:text-brand-blue">شحن فريون مكيفات</a>
+          <a href="/ac-copper-piping-jeddah/" class="py-1 hover:text-brand-blue">تمديد نحاس المكيفات</a>
+          <a href="/blog/choosing-ac-company-jeddah/" class="py-1 hover:text-brand-blue">دليل اختيار شركة مكيفات في جدة</a>
+        </div>
+        <a href="#pricing-table" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">الأسعار</a>
+        <a href="#districts-coverage" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">أحياء جدة</a>
+        <a href="/about/" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">من نحن</a>
+        <a href="/blog/" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">المدونة والنصائح</a>
+        <a href="/contact/" class="px-4 py-3 rounded-xl hover:bg-slate-50 transition-colors">تواصل معنا</a>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-slate-100 flex flex-col gap-3">
+      <a href="tel:+966533553620" class="btn-primary w-full text-center" data-loc="header">
+        <span>اتصل الآن: 0533553620</span>
+      </a>
+      <a href="https://wa.me/966533553620" target="_blank" rel="noopener noreferrer"
+        class="btn-whatsapp w-full text-center" data-loc="header">
+        <span>مراسلة واتساب فورية</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Page Content -->
+  <main id="main-content" class="flex-grow">
+
+    <!-- HERO SECTION -->
+    <section class="bg-brand-navy text-white py-12 md:py-16 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Breadcrumb -->
+        <nav aria-label="مسار التصفح" class="mb-4 text-xs text-brand-cyan/80 flex items-center gap-2">
+          <a href="/" class="hover:text-white transition-colors">الرئيسية</a>
+          <span>/</span>
+          <a href="/services/" class="hover:text-white transition-colors">الخدمات</a>
+          <span>/</span>
+          <span class="text-white font-medium" aria-current="page">تنظيف مكيفات بجدة</span>
+        </nav>
+
+        <!-- H1 (Single H1) -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 leading-tight">
+          تنظيف مكيفات بجدة: غسيل عميق بأكياس العزل ومضخات الضغط
+        </h1>
+
+        <!-- Keywords in First 50 Words -->
+        <p class="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed mb-6">
+          إير كول شركة تنظيف مكيفات بجدة. نقدم غسيل مكيفات سبليت ودولابي ومخفي بمضخة ضغط وكيس عزل يحمي الجدران والأثاث، مع تسليك مجرى الصرف وإزالة الأتربة والروائح. نعرض عليك السعر قبل البدء ونخدم أحياء جدة.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-4 mb-3">
+          <a href="tel:+966533553620" class="btn-primary text-sm py-3 px-6 shadow-md" data-loc="hero">
+            <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <span>اتصل الآن 0533553620</span>
+          </a>
+          <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز خدمة تنظيف مكيفات في جدة."
+            target="_blank" rel="noopener noreferrer"
+            class="btn-whatsapp text-sm py-3 px-6 shadow-md" data-loc="hero">
+            <svg class="w-4 h-4 inline-block ml-1 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>احجز عبر واتساب</span>
+          </a>
+        </div>
+
+        <p class="text-xs text-brand-cyan font-medium">
+          أسعار تبدأ من 80 ريال للمكيف عند تنظيف 8 مكيفات فأكثر، و150 ريال للوحدة الواحدة.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- CONTENT & STICKY SIDEBAR SECTION -->
+    <section class="py-14 sm:py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <!-- Main Content (8 cols) -->
+          <div class="lg:col-span-8 space-y-12 text-right leading-relaxed text-slate-700">
+
+            <!-- 6.1 Primary Image with Figcaption -->
+            <div>
+              <figure class="mb-8">
+                <picture>
+                  <source srcset="/assets/images/ac-cleaning.webp" type="image/webp">
+                  <img src="/assets/images/ac-cleaning.jpg"
+                    alt="غسيل مكيف سبليت بكيس عزل ومضخة ضغط مياه مخصصة في جدة"
+                    width="900" height="500"
+                    fetchpriority="high" decoding="async"
+                    class="rounded-2xl w-full h-auto object-cover shadow-card">
+                </picture>
+                <figcaption class="text-xs text-slate-500 mt-2.5 text-center">
+                  غسيل وحدة مكيف سبليت باستخدام كيس عازل ومضخة مياه معتدلة الضغط لحماية الجدران والأثاث
+                </figcaption>
+              </figure>
+
+              <!-- 6.2 Why AC in Jeddah Needs Cleaning -->
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">لماذا يحتاج مكيفك في جدة إلى تنظيف متخصص؟</h2>
+              <p class="mb-4">
+                الرطوبة في جدة تختلط بالغبار فتكوّن طبقة طينية تلتصق بزعانف المبخر ومروحة السحب (Blower Wheel). غسل الفلاتر في المغسلة يفيد كعناية أسبوعية، لكنه لا يصل إلى الأتربة المتراكمة في عمق الوحدة. ومع الوقت قد تلاحظ:
+              </p>
+              <ul class="list-disc list-inside space-y-2.5 text-sm sm:text-base pr-2 mb-6">
+                <li>ضعف تدفق الهواء البارد وخروجه ببطء رغم ضبط المروحة على أعلى سرعة.</li>
+                <li><a href="/ac-maintenance-jeddah/" class="text-brand-blue font-bold hover:underline">تنقيط ماء</a> داخل الغرفة بسبب بطء التصريف أو انسداده (راجع تفاصيل <a href="/ac-maintenance-jeddah/" class="text-brand-blue font-bold hover:underline">صيانة مكيفات جدة</a> لعلاج التسريب).</li>
+                <li><a href="/ac-sanitization-jeddah/" class="text-brand-blue font-bold hover:underline">رائحة</a> رطوبة أو كتمة عند التشغيل (راجع خيارات <a href="/ac-sanitization-jeddah/" class="text-brand-blue font-bold hover:underline">تعقيم مكيفات جدة</a> للقضاء على مسببات الروائح).</li>
+                <li>عمل الضاغط لفترات أطول لتعويض ضعف التبادل الحراري، مما يرفع استهلاك الكهرباء.</li>
+              </ul>
+            </div>
+
+            <!-- 6.3 Surface vs Professional Pressure Wash -->
+            <div class="bg-slate-50 p-6 sm:p-7 rounded-2xl border border-slate-200">
+              <h2 class="text-xl font-bold text-brand-dark mb-3">الفرق بين الغسيل المنزلي والغسيل بالضغط من إير كول</h2>
+              <div class="space-y-3.5 text-sm leading-relaxed">
+                <p>
+                  <strong>الغسيل المنزلي السطحي:</strong> يقتصر على نزع الفلاتر وغسلها تحت صنبور الماء ومسح الغطاء الخارجي. هذا الإجراء ضروري للمحافظة الدورية، لكنه يعجز عن تفكيك الطين اللزج المتراكم خلف زعانف الألمنيوم وداخل حوض الصرف.
+                </p>
+                <p>
+                  <strong>الغسيل بالضغط المتخصص:</strong> يركب فني إير كول غطاءً قمعياً مائياً محكماً يحيط بالوحدة بالكامل ويتصل بخرطوم تصريف ينتهي في حاوية مياه، مما يقلل تطاير المياه بشكل كبير ويحمي الدهانات والأثاث المحيط. كما يقوم الفني بعزل اللوحة الإلكترونية (PCB) والأسلاك بعازل واقٍ قبل ضخ المياه لإزالة الرواسب الطينية بأمان.
+                </p>
+              </div>
+            </div>
+
+            <!-- 6.4 Service Execution Steps (6 Steps) -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">خطوات تنفيذ خدمة تنظيف المكيف</h2>
+              <div class="space-y-3.5">
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">1. فصل الكهرباء وحماية الدوائر الحساسة</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">فصل القاطع وعزل اللوحة الإلكترونية والأسلاك الكهربائية بعازل مقاوم للرطوبة لتجنب أي تماس كهربائي.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">2. فك الغطاء والريش وغسلها منفصلة</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">فك الوجه الأمامي والفلاتر والريش الموجهة وغسلها بمحلول تنظيف مناسب وتجفيفها بعناية.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">3. تركيب كيس الحماية والغسيل بالضغط</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">تثبيت كيس الغسيل المتخصص ورش زعانف المبخر والمروحة الأسطوانية بمضخة رذاذ معتدلة لإزالة الطين العالق.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">4. تسليك مجرى التصريف وحوض التكثيف</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">ضخ المياه النفاثة داخل خرطوم ومجرى الصرف لإزالة الرواسب والتكلسات التي تسبب فيضان الماء الداخلي.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">5. تنظيف الوحدة الخارجية (المكثف)</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">غسيل زعانف الكمبروسر الخارجية لإزالة الغبار المتراكم الذي يعيق طرد الحرارة في صيف جدة.</p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-blue mb-1">6. التجميع وتجربة التبريد والتأكد من التصريف</h3>
+                  <p class="text-xs sm:text-sm text-slate-600">إعادة تركيب الأجزاء وتجفيف الوحدة، ثم تشغيل المكيف واختبار كفاءة دفع الهواء وسرعة تبريده وسلامة انسياب التصريف.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6.5 Common Mistakes Warning -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">أخطاء شائعة قد تتلف المكيف</h2>
+              <ul class="list-disc list-inside space-y-2.5 text-xs sm:text-sm text-slate-700 bg-amber-50/70 p-5 rounded-2xl border border-amber-200">
+                <li>استخدام ضغط مياه مفرط يثني زعانف الألمنيوم الحساسة ويسد مجرى الهواء بشكل دائم.</li>
+                <li>رش المياه على اللوحة الإلكترونية دون حماية (ويختلف موضعها حسب الموديل وماركة الجهاز)، مما قد يتلف البوردة بالكامل.</li>
+                <li>استخدام المبيضات والمواد الكيميائية القوية التي تتسبب في تآكل مواسير النحاس والزعانف وانثقابها وتسريب وسيط التبريد.</li>
+              </ul>
+            </div>
+
+            <!-- 6.5b (a) Signs your AC needs cleaning -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">علامات تدل أن مكيفك يحتاج غسيل</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <p class="font-bold text-brand-dark mb-1">ضعف دفع الهواء البارد</p>
+                  <p class="text-slate-600">انسداد زعانف المبخر بالأتربة اللزجة يعيق سحب الهواء ودفعه داخل الغرفة.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <p class="font-bold text-brand-dark mb-1">تنقيط المياه داخل الغرفة</p>
+                  <p class="text-slate-600">تراكم الأوحال في حوض التكثيف يسد خرطوم التصريف ويؤدي لفيضان الماء داخلياً.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <p class="font-bold text-brand-dark mb-1">انبعاث روائح رطوبة</p>
+                  <p class="text-slate-600">تراكم الغبار مع الرطوبة في حوض الصرف يولد رائحة مكتومة عند بدء التشغيل.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <p class="font-bold text-brand-dark mb-1">مرور 4 إلى 6 أشهر</p>
+                  <p class="text-slate-600">في مناخ جدة الساحلي، يوصى بغسيل عميق مرتين سنوياً قبل الصيف وفي منتصفه.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6.5b (b) Types of AC Units Cleaned in Jeddah -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">تنظيف أنواع المكيفات في جدة</h2>
+              <div class="space-y-4">
+                <div class="p-5 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-dark text-base mb-2 text-brand-blue">تنظيف مكيف سبليت جداري</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+                    النوع الأكثر انتشاراً في منازل جدة. يتم غسيل الوحدة الداخلية في مكانها بأكياس العزل المتخصصة ومضخة الضغط، مع غسيل الوحدة الخارجية وتسليك الصرف.
+                  </p>
+                  <p class="text-xs font-semibold text-brand-dark">السعر: يبدأ من 150 ريال للوحدة الفردية، ويصل إلى 80 ريال للمكيف عند تنظيف 8 وحدات فأكثر.</p>
+                </div>
+
+                <div class="p-5 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-dark text-base mb-2 text-brand-blue">تنظيف مكيف دولابي (Floor Standing)</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+                    يستخدم في الصالات الكبيرة والمجالس والمساجد. يتطلب فك الشبك السفلي والعلوي والوصول إلى المراوح الكبيرة وحوض التصريف السفلي ومضخة الطرد.
+                  </p>
+                  <p class="text-xs font-semibold text-brand-dark">السعر: يُحدد بعد المعاينة وحسب سعة الجهاز وموقعه.</p>
+                </div>
+
+                <div class="p-5 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-dark text-base mb-2 text-brand-blue">تنظيف مكيف كونسيلد (مخفي)</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+                    مركب داخل الجبس ويتطلب التعامل بحذر من خلال فتحة الصيانة لغسيل المبخر وحوض التصريف دون الإضرار بالديكورات الجبسية، وغسيل المكثف الخارجي.
+                  </p>
+                  <p class="text-xs font-semibold text-brand-dark">السعر: يُحدد بعد المعاينة والاطلاع على موقع فتحة الصيانة.</p>
+                </div>
+
+                <div class="p-5 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-dark text-base mb-2 text-brand-blue">تنظيف مكيف كاسيت سقفي</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+                    شائع في المكاتب والمحلات التجارية. يتطلب فك الوجه الرباعي وغسيل زعانف التبريد الدائرية وتسليك مضخة رفع مياه التصريف وفحص حساس الطفو.
+                  </p>
+                  <p class="text-xs font-semibold text-brand-dark">السعر: يُحدد بعد المعاينة بحسب ارتفاع السقف وتوفر الوصول.</p>
+                </div>
+
+                <div class="p-5 rounded-xl border border-slate-200 bg-white">
+                  <h3 class="font-bold text-brand-dark text-base mb-2 text-brand-blue">تنظيف مكيف شباك</h3>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+                    يتطلب عادة سحب المكيف من صندوق التثبيت لغسيل الحوض الخلفي والمروحة والملفات بالكامل وإزالة الأتربة المتراكمة في قاع الوحدة.
+                  </p>
+                  <p class="text-xs font-semibold text-brand-dark">السعر: يُحدد بعد المعاينة والتأكد من إمكانية فك الوحدة بأمان.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6.5b (c) Scope: What is included and not included -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">ماذا يشمل تنظيف المكيف وما لا يشمله</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200">
+                  <p class="font-bold text-emerald-800 mb-2">الخدمة تشمل:</p>
+                  <ul class="space-y-1.5 text-emerald-900 pr-2 list-disc list-inside">
+                    <li>غسيل زعانف ومروحة الوحدة الداخلية.</li>
+                    <li>غسيل زعانف المكثف بالوحدة الخارجية.</li>
+                    <li>تسليك مجرى وخرطوم التصريف بمضخة المياه.</li>
+                    <li>استخدام أكياس عزل مخصصة لحماية الجدران والأثاث.</li>
+                    <li>فحص عمل التبريد بعد انتهاء الغسيل والتجميع.</li>
+                  </ul>
+                </div>
+                <div class="p-5 rounded-2xl bg-rose-50/60 border border-rose-200">
+                  <p class="font-bold text-rose-800 mb-2">الخدمة لا تشمل:</p>
+                  <ul class="space-y-1.5 text-rose-900 pr-2 list-disc list-inside">
+                    <li>إصلاح الأعطال الميكانيكية أو الكهربائية (تُطلب عبر <a href="/ac-maintenance-jeddah/" class="underline font-bold">صيانة مكيفات جدة</a>).</li>
+                    <li>شحن غاز الفريون ومعالجة التهريب (تُطلب عبر <a href="/ac-gas-refilling-jeddah/" class="underline font-bold">شحن فريون جدة</a>).</li>
+                    <li>فك ونقل المكيف من موقع لآخر (تُطلب عبر <a href="/ac-installation-jeddah/" class="underline font-bold">فك وتركيب مكيفات جدة</a>).</li>
+                    <li>استبدال قطع الغيار التالفة مثل الكابستور أو محرك المروحة.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6.5b (d) How to prepare before the technician arrives -->
+            <div>
+              <h2 class="text-2xl font-extrabold text-brand-dark mb-4">كيف تجهّز مكيفك قبل وصول الفني</h2>
+              <p class="text-xs sm:text-sm text-slate-600 mb-3 leading-relaxed">
+                لمساعدتنا على تقديم الخدمة بأعلى دقة وسرعة ممكنة، ننصح باتباع الخطوات البسيطة التالية:
+              </p>
+              <div class="space-y-2.5 text-xs sm:text-sm text-slate-700">
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                  <span class="w-5 h-5 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+                  <span>إخلاء المساحة الواقعة مباشرة أسفل المكيف الداخلي من الأجهزة الإلكترونية والأثاث الخفيف أو تغطيتها.</span>
+                </div>
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                  <span class="w-5 h-5 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+                  <span>توفير وتأمين مسار سهل للوصول إلى الوحدة الخارجية (سواء على الجدار الخارجي أو السطح).</span>
+                </div>
+                <div class="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                  <span class="w-5 h-5 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+                  <span>التأكد من توفر مصدر ماء قريب (صنبور أو دورة مياه) لتشغيل مضخة رذاذ الغسيل.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6.5b (e) Before/After placeholder -->
+            <!-- قسم قبل وبعد / أعمال منفذة: يُفعّل فور توفر صور حقيقية [TO_CONFIRM: REAL_PHOTOS] -->
+
+            <!-- 7. PRICING TABLE & INTERACTIVE CALCULATOR -->
+            <div id="pricing-table" class="my-10 pt-4">
+              <div class="text-right mb-4">
+                <span class="text-brand-blue font-bold text-xs bg-brand-cyan-light px-3 py-1 rounded-full">تسعير واضح</span>
+                <h2 class="text-2xl font-extrabold text-brand-dark mt-2">أسعار تنظيف المكيفات بجدة</h2>
+                <p class="text-slate-600 text-sm mt-1">أسعار استرشادية للمكيف السبليت، ويُحدد السعر النهائي بعد معرفة نوع المكيف وعدده وحالة الجهاز.</p>
+              </div>
+
+              <!-- Static HTML Pricing Table -->
+              <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm mb-8">
+                <table class="w-full text-right text-xs sm:text-sm">
+                  <caption class="sr-only">جدول باقات وأسعار تنظيف المكيفات في جدة</caption>
+                  <thead class="bg-brand-dark text-white">
+                    <tr>
+                      <th scope="col" class="p-4 font-bold">الباقة وعدد المكيفات</th>
+                      <th scope="col" class="p-4 font-bold">السعر التقديري</th>
+                      <th scope="col" class="p-4 font-bold">تفاصيل ما تشمله الخدمة</th>
+                      <th scope="col" class="p-4 font-bold text-center">الحجز والمتابعة</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 bg-white">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                      <td class="p-4 font-bold text-brand-dark">تنظيف مكيف سبليت واحد (وحدة داخلية وخارجية)</td>
+                      <td class="p-4 font-black text-brand-blue text-sm sm:text-base whitespace-nowrap">150 ر.س</td>
+                      <td class="p-4 text-slate-600">كيس عزل + غسيل بالضغط + تسليك الصرف</td>
+                      <td class="p-4 text-center">
+                        <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز تنظيف مكيف سبليت واحد في جدة." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-1.5 px-3" data-loc="pricing">
+                          حجز واتساب
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="bg-slate-50/60 hover:bg-slate-50 transition-colors">
+                      <td class="p-4 font-bold text-brand-dark">تنظيف من 2 إلى 3 مكيفات</td>
+                      <td class="p-4 font-black text-brand-blue text-sm sm:text-base whitespace-nowrap">120 ر.س <span class="text-xs font-normal text-slate-500">/ للمكيف</span></td>
+                      <td class="p-4 text-slate-600">غسيل شامل وفحص أداء التبريد وعزل الموقع</td>
+                      <td class="p-4 text-center">
+                        <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز تنظيف 2 إلى 3 مكيفات في جدة." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-1.5 px-3" data-loc="pricing">
+                          حجز واتساب
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                      <td class="p-4 font-bold text-brand-dark">تنظيف من 4 إلى 7 مكيفات</td>
+                      <td class="p-4 font-black text-brand-blue text-sm sm:text-base whitespace-nowrap">100 ر.س <span class="text-xs font-normal text-slate-500">/ للمكيف</span></td>
+                      <td class="p-4 text-slate-600">غسيل عميق + حماية الأثاث وتسليك خطوط الصرف</td>
+                      <td class="p-4 text-center">
+                        <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز تنظيف 4 إلى 7 مكيفات في جدة." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-1.5 px-3" data-loc="pricing">
+                          حجز واتساب
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="bg-slate-50/60 hover:bg-slate-50 transition-colors">
+                      <td class="p-4 font-bold text-brand-dark">تنظيف 8 مكيفات فأكثر (مساجد، عمائر، مكاتب)</td>
+                      <td class="p-4 font-black text-brand-blue text-sm sm:text-base whitespace-nowrap">80 ر.س <span class="text-xs font-normal text-slate-500">/ للمكيف</span></td>
+                      <td class="p-4 text-slate-600">تسعير كميات مخفض وجدولة مواعيد مرنة</td>
+                      <td class="p-4 text-center">
+                        <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز تنظيف 8 مكيفات فأكثر في جدة." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-1.5 px-3" data-loc="pricing">
+                          حجز واتساب
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-slate-50 transition-colors">
+                      <td class="p-4 font-bold text-brand-dark">باقة الغسيل + التعقيم الكيميائي</td>
+                      <td class="p-4 font-black text-brand-blue text-sm sm:text-base whitespace-nowrap">140 ر.س <span class="text-xs font-normal text-slate-500">/ للمكيف</span></td>
+                      <td class="p-4 text-slate-600">غسيل كامل + تعقيم بمادة مخصصة للمكيفات لإزالة الروائح (<a href="/ac-sanitization-jeddah/" class="text-brand-blue underline">تفاصيل التعقيم</a>)</td>
+                      <td class="p-4 text-center">
+                        <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز باقة الغسيل والتعقيم في جدة." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-1.5 px-3" data-loc="pricing">
+                          حجز واتساب
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Interactive AC Cleaning Price Estimator Calculator -->
+              <div id="cleaningCalculator" class="p-6 sm:p-7 rounded-2xl bg-brand-light border border-slate-200 shadow-sm text-right">
+                <div class="mb-4 pb-3 border-b border-slate-200">
+                  <h3 class="text-lg font-bold text-brand-dark">حاسبة التكلفة التقديرية لتنظيف المكيفات</h3>
+                  <p class="text-xs text-slate-500 mt-1">اختر عدد ونوع المكيفات لحساب التكلفة التقديرية فوراً:</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                  <div>
+                    <label for="calcUnits" class="block text-xs font-bold text-slate-700 mb-1.5">عدد المكيفات المطلوب تنظيفها:</label>
+                    <select id="calcUnits" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                      <option value="1">مكيف واحد (150 ريال)</option>
+                      <option value="2">مكيفان (120 ريال للمكيف)</option>
+                      <option value="3">3 مكيفات (120 ريال للمكيف)</option>
+                      <option value="4">4 مكيفات (100 ريال للمكيف)</option>
+                      <option value="5">5 مكيفات (100 ريال للمكيف)</option>
+                      <option value="6">6 مكيفات (100 ريال للمكيف)</option>
+                      <option value="7">7 مكيفات (100 ريال للمكيف)</option>
+                      <option value="8">8 مكيفات فأكثر (80 ريال للمكيف)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="calcType" class="block text-xs font-bold text-slate-700 mb-1.5">نوع المكيف:</label>
+                    <select id="calcType" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                      <option value="split">سبليت جداري</option>
+                      <option value="floor">دولابي (Floor Standing)</option>
+                      <option value="concealed">كونسيلد مخفي</option>
+                      <option value="cassette">كاسيت سقف</option>
+                      <option value="window">مكيف شباك</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <span class="text-xs text-slate-500 font-medium">التكلفة التقديرية الإجمالية:</span>
+                    <p id="calcResultDisplay" class="text-2xl font-black text-brand-blue mt-0.5">150 <span class="text-sm font-bold text-slate-600">ريال</span></p>
+                    <p class="text-[11px] text-slate-400 mt-1">تقدير استرشادي، ويؤكد الفني السعر بعد المعاينة.</p>
+                  </div>
+                  <a id="calcWaBtn" href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز تنظيف 1 مكيف سبليت جداري في جدة، التقدير الاسترشادي 150 ريال."
+                    target="_blank" rel="noopener noreferrer"
+                    class="btn-whatsapp text-xs sm:text-sm py-2.5 px-5 w-full sm:w-auto text-center shadow-sm" data-loc="calculator">
+                    تأكيد الحجز عبر واتساب
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 8. DISTRICTS COVERAGE -->
+            <div id="districts-coverage" class="my-10 p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="mb-4 pb-3 border-b border-slate-200 text-right">
+                <span class="text-brand-blue font-bold text-xs bg-brand-cyan-light px-3 py-1 rounded-full">نطاق الخدمة بجدة</span>
+                <h2 class="text-xl sm:text-2xl font-extrabold text-brand-dark mt-2">أحياء جدة التي نخدمها</h2>
+                <p class="text-slate-600 text-xs sm:text-sm mt-1">نخدم أحياء جدة. اكتب حيّك في الواتساب لتأكيد الموعد.</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                  <h3 class="font-bold text-brand-dark mb-2 text-sm text-brand-blue">شمال جدة</h3>
+                  <p class="text-slate-600 leading-relaxed">أبحر الشمالية، أبحر الجنوبية، الشاطئ، المرجان، البساتين، المحمدية، النعيم، النهضة، الزهراء، السلامة.</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                  <h3 class="font-bold text-brand-dark mb-2 text-sm text-brand-blue">وسط وشرق جدة</h3>
+                  <p class="text-slate-600 leading-relaxed">الروضة، الأندلس، الحمراء، الصفا، المروة، الفيصلية، الربوة، السامر، المنار، البلد (جدة التاريخية).</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200">
+                  <h3 class="font-bold text-brand-dark mb-2 text-sm text-brand-blue">جنوب وشمال شرق جدة</h3>
+                  <p class="text-slate-600 leading-relaxed">الحمدانية، الصالحية، الفلاح، الياقوت، الفيحاء، النسيم، الجامعة، الوزيرية، الثغر.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 12. FAQS SECTION (Using <details><summary>) -->
+            <div id="faq-section" class="my-12">
+              <div class="text-right mb-6">
+                <span class="text-brand-blue font-bold text-xs bg-brand-cyan-light px-3 py-1 rounded-full">الأسئلة الشائعة</span>
+                <h2 class="text-2xl font-extrabold text-brand-dark mt-2">الأسئلة الشائعة حول تنظيف المكيفات بجدة</h2>
+                <p class="text-slate-600 text-sm mt-1">إجابات واضحة ومباشرة لأهم الأسئلة قبل طلب فني الغسيل.</p>
+              </div>
+
+              <div class="space-y-3.5">
+{faq_section_html}
+              </div>
+            </div>
+
+            <!-- Contextual Internal Linking in Body -->
+            <div class="border-t border-slate-200 pt-6">
+              <h3 class="text-lg font-bold text-brand-dark mb-2">معلومات ونصائح فنية إضافية</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                إذا كنت ترغب بالتعرف أكثر على كيفية العناية الدورية بمكيفك، يمكنك قراءة <a href="/blog/ac-cleaning-guide-jeddah/" class="text-brand-blue font-bold hover:underline">دليل تنظيف المكيفات في جدة</a> عبر مدونتنا، أو العودة إلى <a href="/" class="text-brand-blue font-bold hover:underline">شركة مكيفات بجدة</a> للاطلاع على كامل خدمات شركة إير كول.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Sticky Sidebar (4 cols) -->
+          <div class="lg:col-span-4 space-y-6">
+            <div id="sidebar" class="bg-brand-light p-6 rounded-2xl border border-slate-200 sticky top-28 shadow-sm text-right">
+              <h3 class="text-lg font-bold text-brand-dark mb-2 border-b border-slate-200 pb-2">حجز موعد غسيل مكيفات</h3>
+              <p class="text-xs text-slate-600 mb-5 leading-relaxed">
+                حدد عدد المكيفات وموقعك في جدة وسيتواصل معك فني إير كول بمعدات الغسيل العازلة:
+              </p>
+
+              <div class="space-y-3">
+                <a href="tel:+966533553620" class="btn-primary w-full text-center text-sm py-3" data-loc="sidebar">
+                  <span>اتصال مباشر: 0533553620</span>
+                </a>
+                <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز خدمة تنظيف مكيفات في جدة."
+                  target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-center text-sm py-3" data-loc="sidebar">
+                  <span>حجز غسيل عبر واتساب</span>
+                </a>
+              </div>
+
+              <!-- Working Hours Card in Sidebar -->
+              <div class="mt-6 pt-5 border-t border-slate-200 text-xs text-slate-600 space-y-1.5">
+                <p class="font-bold text-slate-800">مواعيد استقبال الطلبات:</p>
+                <p>السبت - الخميس: 08:00 ص - 10:00 م</p>
+                <p>الجمعة: 01:00 م - 10:00 م</p>
+              </div>
+
+              <!-- Complementary Services in Sidebar -->
+              <div class="mt-6 pt-5 border-t border-slate-200">
+                <p class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">خدمات مكيفات مرتبطة:</p>
+                <ul class="space-y-2 text-xs font-semibold text-brand-dark">
+                  <li><a href="/ac-sanitization-jeddah/" class="hover:text-brand-blue flex items-center gap-1.5">• تفاصيل تعقيم مكيفات جدة</a></li>
+                  <li><a href="/ac-maintenance-jeddah/" class="hover:text-brand-blue flex items-center gap-1.5">• تفاصيل صيانة مكيفات جدة</a></li>
+                  <li><a href="/ac-gas-refilling-jeddah/" class="hover:text-brand-blue flex items-center gap-1.5">• تفاصيل شحن فريون جدة</a></li>
+                  <li><a href="/ac-installation-jeddah/" class="hover:text-brand-blue flex items-center gap-1.5">• تفاصيل فك وتركيب مكيفات جدة</a></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 9. CROSS-LINKING MESH SECTION (Inside max-w-7xl) -->
+        <div class="mt-16 pt-12 border-t border-slate-200">
+          <div class="text-right mb-8">
+            <span class="text-brand-blue font-bold text-xs bg-brand-cyan-light px-3 py-1 rounded-full">حلول متكاملة للتكييف</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-brand-dark mt-2">خدمات مكيفات أخرى نوفرها في جدة</h2>
+            <p class="text-slate-600 text-sm mt-1">تصفح خدمات التكييف المعتمدة لدى إير كول بأسعار واضحة وتكلفة معلنة مسبقاً.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+            <!-- Card 1: Maintenance -->
+            <a href="/ac-maintenance-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">صيانة مكيفات بجدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">تشخيص فني بأجهزة القياس لأعطال ضعف التبريد والكمبروسر وتنقيط الماء وقطع الغيار المطابقة.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                تفاصيل صيانة مكيفات جدة ←
+              </span>
+            </a>
+
+            <!-- Card 2: Installation -->
+            <a href="/ac-installation-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">فك وتركيب مكيفات بجدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">فك ونقل وتركيب آمن مع حبس الفريون (Pump Down) وضبط ميلان الوحدة لمنع التسريب.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                تفاصيل فك وتركيب مكيفات جدة ←
+              </span>
+            </a>
+
+            <!-- Card 3: Gas refill -->
+            <a href="/ac-gas-refilling-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">شحن فريون مكيفات بجدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">كشف التسريب وتعبئة الغاز المناسب لجهازك (R410A / R22 / R32) بحسب الوزن المعياري.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                تفاصيل شحن فريون جدة ←
+              </span>
+            </a>
+
+            <!-- Card 4: Copper piping -->
+            <a href="/ac-copper-piping-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">تمديد نحاس المكيفات بجدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">تمديد مواسير النحاس المخصصة للتكييف مع العزل الحراري واختبار ضغط النيتروجين.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                تفاصيل تمديد نحاس المكيفات ←
+              </span>
+            </a>
+
+            <!-- Card 5: Sanitization -->
+            <a href="/ac-sanitization-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">تعقيم مكيفات بجدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">تطهير مجاري الهواء والزعانف بمواد تعقيم مخصصة للمكيفات لإزالة الروائح الناتجة عن الرطوبة.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                تفاصيل تعقيم مكيفات جدة ←
+              </span>
+            </a>
+
+            <!-- Card 6: Guide -->
+            <a href="/blog/choosing-ac-company-jeddah/" class="group block p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand-blue hover:shadow-md transition-all duration-300">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="w-10 h-10 rounded-xl bg-brand-light group-hover:bg-brand-blue group-hover:text-white text-brand-blue flex items-center justify-center transition-colors flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                </span>
+                <h3 class="font-bold text-brand-dark group-hover:text-brand-blue transition-colors text-base">دليل اختيار شركة مكيفات في جدة</h3>
+              </div>
+              <p class="text-slate-500 text-xs leading-relaxed line-clamp-2">معايير اختيار الفني المؤهل، والتحقق من صدق التشخيص، وضمان حقك المالي قبل الاتفاق.</p>
+              <span class="inline-flex items-center gap-1 text-xs font-bold text-brand-blue mt-3 group-hover:underline">
+                قراءة دليل الاختيار ←
+              </span>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="siteFooter" class="bg-brand-navy text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-12 border-b border-slate-800 text-right">
+
+        <!-- Col 1: About & Logo -->
+        <div>
+          <div class="inline-block bg-white p-2.5 rounded-xl shadow-sm mb-4">
+            <img src="/assets/images/logo.webp" alt="إير كول" width="147" height="99" class="h-9 w-auto object-contain">
+          </div>
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
+            إير كول شركة متخصصة في صيانة، غسيل، فك وتركيب، شحن فريون، وتمديد نحاس المكيفات في جدة. فنيون مؤهلون وتشخيص دقيق مع توضيح التكلفة قبل بدء العمل.
+          </p>
+          <div class="flex items-center gap-3">
+            <a href="https://wa.me/966533553620" target="_blank" rel="noopener noreferrer"
+              class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-brand-whatsapp text-white flex items-center justify-center transition-colors"
+              aria-label="واتساب إير كول" data-loc="footer">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            </a>
+            <a href="tel:+966533553620"
+              class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-brand-blue text-white flex items-center justify-center transition-colors"
+              aria-label="اتصال هاتفي" data-loc="footer">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <p class="text-white font-bold text-base mb-4 border-r-2 border-brand-cyan pr-3">روابط الموقع</p>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
+            <li><a href="/" class="hover:text-brand-cyan transition-colors">الرئيسية</a></li>
+            <li><a href="/services/" class="hover:text-brand-cyan transition-colors">خدماتنا</a></li>
+            <li><a href="#pricing-table" class="hover:text-brand-cyan transition-colors">الأسعار</a></li>
+            <li><a href="#districts-coverage" class="hover:text-brand-cyan transition-colors">أحياء جدة</a></li>
+            <li><a href="/about/" class="hover:text-brand-cyan transition-colors">من نحن</a></li>
+            <li><a href="/blog/" class="hover:text-brand-cyan transition-colors">المدونة والنصائح</a></li>
+            <li><a href="/privacy/" class="hover:text-brand-cyan transition-colors">سياسة الخصوصية</a></li>
+            <li><a href="/contact/" class="hover:text-brand-cyan transition-colors">تواصل معنا</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Services -->
+        <div>
+          <p class="text-white font-bold text-base mb-4 border-r-2 border-brand-cyan pr-3">خدمات المكيفات بجدة</p>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
+            <li><a href="/ac-cleaning-jeddah/" class="hover:text-brand-cyan transition-colors">تنظيف وغسيل مكيفات بجدة</a></li>
+            <li><a href="/ac-maintenance-jeddah/" class="hover:text-brand-cyan transition-colors">صيانة مكيفات بجدة</a></li>
+            <li><a href="/ac-installation-jeddah/" class="hover:text-brand-cyan transition-colors">فك وتركيب مكيفات سبليت</a></li>
+            <li><a href="/ac-gas-refilling-jeddah/" class="hover:text-brand-cyan transition-colors">شحن فريون وفحص تسريب</a></li>
+            <li><a href="/ac-copper-piping-jeddah/" class="hover:text-brand-cyan transition-colors">تمديد نحاس المكيفات</a></li>
+            <li><a href="/ac-sanitization-jeddah/" class="hover:text-brand-cyan transition-colors">تعقيم وتطهير مكيفات</a></li>
+            <li><a href="/blog/choosing-ac-company-jeddah/" class="hover:text-brand-cyan transition-colors">دليل اختيار شركة مكيفات</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact & Coverage -->
+        <div>
+          <p class="text-white font-bold text-base mb-4 border-r-2 border-brand-cyan pr-3">معلومات التواصل</p>
+          <ul class="space-y-3.5 text-xs sm:text-sm text-slate-400">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <div>
+                <a href="tel:+966533553620" class="hover:text-white font-bold text-slate-200" dir="ltr" data-loc="footer">+966 53 355 3620</a>
+                <p class="text-xs text-slate-500 mt-0.5">اتصال مباشر أو واتساب</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <div>
+                <p class="font-bold text-slate-200">نخدم جميع أحياء جدة</p>
+                <p class="text-xs text-slate-500 mt-0.5">شمال، وسط، جنوب وشرق جدة</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brand-cyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div>
+                <p class="text-slate-200 font-bold">السبت - الخميس: 8 ص - 10 م</p>
+                <p class="text-xs text-slate-500 mt-0.5">الجمعة: 1 ظهراً - 10 مساءً</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 text-center text-xs text-slate-500">
+        <p>© 2026 إير كول - خدمات التكييف والتبريد بجدة. جميع الحقوق محفوظة.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY BOTTOM ACTION BAR (lg:hidden) -->
+  <div id="mobileStickyBar"
+    class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] flex gap-2 shadow-2xl">
+    <a href="tel:+966533553620"
+      class="flex-1 btn-primary text-sm py-3 rounded-xl flex items-center justify-center gap-2 font-bold shadow-sm"
+      data-loc="sticky_bar">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      <span>اتصل الآن</span>
+    </a>
+    <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز خدمة تنظيف مكيفات في جدة."
+      target="_blank" rel="noopener noreferrer"
+      class="flex-1 btn-whatsapp text-sm py-3 rounded-xl flex items-center justify-center gap-2 font-bold shadow-sm"
+      data-loc="sticky_bar">
+      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      <span>واتساب</span>
+    </a>
+  </div>
+
+  <!-- FLOATING WHATSAPP BUTTON (DESKTOP ONLY: hidden lg:flex) -->
+  <a href="https://wa.me/966533553620?text=السلام عليكم، أرغب في حجز خدمة تنظيف مكيفات في جدة." target="_blank" rel="noopener noreferrer"
+    class="hidden lg:flex fixed bottom-6 left-6 z-40 items-center gap-2.5 bg-brand-whatsapp text-white px-4 py-3 rounded-full shadow-2xl hover:bg-brand-whatsapp-hover transition-all duration-300 hover:scale-105 group focus:outline-none focus:ring-2 focus:ring-brand-whatsapp"
+    aria-label="تواصل مع إير كول عبر واتساب" data-loc="sticky_bar">
+    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    <span class="text-sm font-bold">تواصل عبر واتساب</span>
+  </a>
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js" defer></script>
+</body>
+
+</html>
+'''
+
+with open('ac-cleaning-jeddah/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Generated ac-cleaning-jeddah/index.html successfully.")
+

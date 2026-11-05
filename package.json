@@ -1,0 +1,24 @@
+{
+  "name": "air-cool-jeddah",
+  "version": "1.0.0",
+  "description": "موقع شركة إير كول للمكيفات بجدة - خدمات فك وتركيب وصيانة وتنظيف وشحن فريون وتمديد نحاس المكيفات",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/style.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/style.css --watch"
+  },
+  "keywords": [
+    "مكيفات جدة",
+    "صيانة مكيفات",
+    "تركيب مكيفات",
+    "تنظيف مكيفات",
+    "شركة مكيفات بجدة"
+  ],
+  "author": "Air Cool Jeddah",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  }
+}

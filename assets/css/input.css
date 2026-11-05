@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Cairo', 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+    direction: rtl;
+    text-align: right;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-brand-light text-brand-dark antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    @apply bg-brand-cyan text-brand-dark;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-blue ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-brand-blue hover:bg-brand-blue-hover transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-cta {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-brand-cta hover:bg-brand-cta-hover transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-brand-whatsapp hover:bg-brand-whatsapp-hover transition-all duration-200 shadow-md hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-brand-dark bg-white hover:bg-slate-50 border border-brand-border transition-all duration-200 shadow-sm hover:shadow;
+  }
+
+  .card-service {
+    @apply bg-white rounded-2xl p-6 border border-slate-100 shadow-card hover:shadow-xl hover:border-brand-cyan/40 transition-all duration-300 flex flex-col justify-between;
+  }
+
+  .section-badge {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-bold bg-brand-cyan-light text-brand-blue border border-brand-cyan/30;
+  }
+
+  .card-feature {
+    @apply bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue/40 shadow-sm hover:shadow-card transition-all duration-300;
+  }
+
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-md border border-white/40 shadow-card;
+  }
+
+  .glass-card-dark {
+    @apply bg-brand-dark/85 backdrop-blur-md border border-white/10 text-white shadow-xl;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F8FC;
+}
+::-webkit-scrollbar-thumb {
+  background: #BCCCDC;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1677D2;
+}
+
+.object-contain {
+  object-fit: contain;
+}
