@@ -25,15 +25,33 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "من نحن - شركة إير كول للمكيفات بجدة",
-  "description": "التعريف بشركة إير كول ورؤيتها في تقديم خدمات تكييف احترافية مبنية على الشفافية.",
-  "publisher": {
-    "@type": "HVACBusiness",
-    "name": "شركة إير كول للمكيفات بجدة",
-    "telephone": "+966533553620",
-    "url": "https://aircoolsa.com/"
-  }
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الرئيسية",
+          "item": "https://aircoolsa.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "من نحن",
+          "item": "https://aircoolsa.com/about/"
+        }
+      ]
+    },
+    {
+      "@type": "AboutPage",
+      "name": "من نحن - شركة إير كول للمكيفات بجدة",
+      "description": "التعريف بشركة إير كول ورؤيتها في تقديم خدمات تكييف احترافية مبنية على الشفافية.",
+      "publisher": {
+        "@id": "https://aircoolsa.com/#business"
+      }
+    }
+  ]
 }
   </script>
 </head>
