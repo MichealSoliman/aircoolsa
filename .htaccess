@@ -13,6 +13,10 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteBase /
 
+  # 3.0 منع الوصول العام لملفات التطوير (سكريبتات، حزم، توثيق داخلي)
+  RewriteRule ^(scratch|node_modules|\.git)(/|$) - [R=404,L,NC]
+  RewriteRule ^(README\.md|seo-keywords-map\.md|package(-lock)?\.json|tailwind\.config\.js|postcss\.config\.js|assets/css/input\.css)$ - [R=404,L,NC]
+
   # 3.1 توحيد https + non-www (قفزة واحدة)
   RewriteCond %{HTTPS} off [OR]
   RewriteCond %{HTTP_HOST} ^www\.aircoolsa\.com$ [NC]

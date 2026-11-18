@@ -24,52 +24,99 @@
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "الرئيسية",
-            "item": "https://aircoolsa.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "المدونة",
-            "item": "https://aircoolsa.com/blog/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "دليل تنظيف المكيفات في جدة",
-            "item": "https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/"
-          }
-        ]
-      },
-      {
-        "@type": "Article",
-        "headline": "دليل تنظيف المكيفات في جدة: متى تحتاج إلى التنظيف وما الخطوات المهمة؟",
-        "image": "https://aircoolsa.com/assets/images/ac-cleaning.jpg",
-        "author": {
-          "@type": "Organization",
-          "name": "إير كول"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الرئيسية",
+          "item": "https://aircoolsa.com/"
         },
-        "publisher": {
-          "@id": "https://aircoolsa.com/#business"
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "المدونة",
+          "item": "https://aircoolsa.com/blog/"
         },
-        "datePublished": "2026-10-27",
-        "dateModified": "2026-10-27",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/"
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "دليل تنظيف المكيفات في جدة",
+          "item": "https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/"
         }
+      ]
+    },
+    {
+      "@type": "Article",
+      "headline": "دليل تنظيف المكيفات في جدة: متى تحتاج إلى التنظيف وما الخطوات المهمة؟",
+      "image": "https://aircoolsa.com/assets/images/ac-cleaning.jpg",
+      "author": {
+        "@type": "Organization",
+        "name": "إير كول",
+        "url": "https://aircoolsa.com/about/"
+      },
+      "publisher": {
+        "@id": "https://aircoolsa.com/#business"
+      },
+      "datePublished": "2026-10-27",
+      "dateModified": "2026-11-18",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/"
       }
-    ]
-  }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "كم مرة أنظف المكيف في جدة؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نظّف الفلاتر كل 2 إلى 3 أسابيع، واطلب غسيلاً عميقاً متخصصاً مرتين في السنة: قبل الصيف وفي منتصفه، بسبب الرطوبة والغبار في جدة."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل أقدر أغسل المكيف بنفسي؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "تقدر تنظف الفلاتر والوجه البلاستيكي بنفسك. أما غسيل المبخر وحوض الصرف فيحتاج كيس عزل ومضخة بضغط مناسب وحماية للكارت، وهذا عمل فني متخصص."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "لماذا يخرج من المكيف رائحة بعد الغسيل؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "غالباً بسبب بقاء ترسبات عضوية داخل حوض الصرف أو المبخر. الحل هو التعقيم بعد الغسيل لإزالة الطبقة المسببة للرائحة."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل تنظيف المكيف يقلل فاتورة الكهرباء؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، المبخر والمكثف النظيفان ينقلان الحرارة أسرع، فيصل المكيف للحرارة المطلوبة ويفصل الكمبروسر أبكر، فيقل الاستهلاك."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كم سعر غسيل المكيف السبليت في جدة؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "يبدأ من 150 ريال للمكيف الواحد، ويقل السعر عند تعدد المكيفات حتى 80 ريال للمكيف عند 8 مكيفات فأكثر."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 
@@ -156,14 +203,17 @@
         <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 pb-8 border-b border-slate-100 mb-8">
           <span>بواسطة: فريق التحرير الفني بإير كول</span>
           <span>•</span>
-          <span>تحديث: 27 أكتوبر 2026</span>
+          <span>تحديث: 18 نوفمبر 2026</span>
           <span>•</span>
           <span class="bg-blue-50 text-brand-blue px-2.5 py-1 rounded-md font-semibold">تكييف منزلي</span>
         </div>
 
         <!-- Featured Image -->
-        <img src="/assets/images/ac-cleaning.jpg" alt="تنظيف مكيف سبليت باستخدام مضخة المياه وكيس العزل" width="900"
+        <picture>
+          <source srcset="/assets/images/ac-cleaning.webp" type="image/webp">
+          <img fetchpriority="high" decoding="async" src="/assets/images/ac-cleaning.jpg" alt="تنظيف مكيف سبليت باستخدام مضخة المياه وكيس العزل" width="900"
           height="500" class="rounded-3xl w-full h-auto object-cover shadow-card mb-10">
+        </picture>
 
         <!-- Direct Answer Introduction -->
         <div class="bg-brand-light p-6 rounded-2xl border border-brand-border/60 mb-10 text-right">
@@ -180,15 +230,16 @@
         <div class="p-6 rounded-2xl border border-slate-200 mb-10 bg-white">
           <h2 class="text-base font-bold text-brand-dark mb-3">فهرس محتويات الدليل:</h2>
           <ul class="space-y-2 text-sm text-brand-blue">
-            <li><a href="#why-jeddah-is-different" class="hover:underline">1. لماذا يختلف تنظيف المكيف في جدة عن بقية
-                المدن؟</a></li>
-            <li><a href="#signs-of-dirty-ac" class="hover:underline">2. خمس علامات مؤكدة على اتساخ مكيفك الداخلي</a>
-            </li>
-            <li><a href="#steps-for-safe-cleaning" class="hover:underline">3. الخطوات الهندسية للتنظيف العميق الآمن</a>
-            </li>
-            <li><a href="#diy-vs-professional" class="hover:underline">4. متى يمكنك التنظيف بنفسك ومتى تطلب فني
-                متخصص؟</a></li>
-            <li><a href="#faq-cleaning" class="hover:underline">5. أسئلة شائعة حول غسيل المكيفات بجدة</a></li>
+            <li><a href="#part-1" class="hover:underline">1. لماذا يختلف تنظيف المكيف في جدة عن بقية المدن؟</a></li>
+            <li><a href="#part-2" class="hover:underline">2. خمس علامات مؤكدة على اتساخ مكيفك الداخلي</a></li>
+            <li><a href="#part-3" class="hover:underline">3. الخطوات الهندسية للتنظيف العميق الآمن</a></li>
+            <li><a href="#part-4" class="hover:underline">4. متى يمكنك التنظيف بنفسك ومتى تطلب فني متخصص؟</a></li>
+            <li><a href="#part-5" class="hover:underline">5. جدول تنظيف المكيف في جدة حسب نوع الاستخدام</a></li>
+            <li><a href="#part-6" class="hover:underline">6. طريقة تنظيف فلتر المكيف بنفسك خطوة بخطوة</a></li>
+            <li><a href="#part-7" class="hover:underline">7. تنظيف الوحدة الخارجية في جدة: الغبار والأملاح</a></li>
+            <li><a href="#part-8" class="hover:underline">8. أخطاء شائعة عند تنظيف المكيف في البيت</a></li>
+            <li><a href="#part-9" class="hover:underline">9. كم تكلفة تنظيف المكيف في جدة؟</a></li>
+            <li><a href="#part-10" class="hover:underline">10. أسئلة شائعة</a></li>
           </ul>
         </div>
 
@@ -196,7 +247,7 @@
         <div class="space-y-8 text-right text-slate-700 text-sm sm:text-base leading-relaxed">
 
           <section id="why-jeddah-is-different">
-            <h2 class="text-2xl font-bold text-brand-dark mb-3">1. لماذا يختلف تنظيف المكيف في جدة عن بقية المدن؟</h2>
+            <h2 id="part-1" class="text-2xl font-bold text-brand-dark mb-3">1. لماذا يختلف تنظيف المكيف في جدة عن بقية المدن؟</h2>
             <p class="mb-3">
               تنفرد مدينة جدة بعاملين مناخيين متلازمين: درجات حرارة مرتفعة طوال معظم شهور العام، ورطوبة ساحلية نسبية
               مرتفعة جداً قادمة من البحر الأحمر. عندما تسحب مروحة التكييف هواء الغرفة الرطب المليء بذرات الغبار، يمر هذا
@@ -210,7 +261,7 @@
           </section>
 
           <section id="signs-of-dirty-ac">
-            <h2 class="text-2xl font-bold text-brand-dark mb-3">2. خمس علامات مؤكدة على اتساخ مكيفك الداخلي</h2>
+            <h2 id="part-2" class="text-2xl font-bold text-brand-dark mb-3">2. خمس علامات مؤكدة على اتساخ مكيفك الداخلي</h2>
             <ul class="list-disc list-inside space-y-2 pr-2">
               <li><strong>دفع هواء خافت:</strong> صوت المروحة مرتفع ولكن كمية الهواء الخارجة من فتحة المكيف ضعيفة.</li>
               <li><strong>تساقط المياه داخل الغرفة:</strong> انسداد مجرى التصريف بالأتربة والطحالب يمنع جريان ماء
@@ -225,7 +276,7 @@
           </section>
 
           <section id="steps-for-safe-cleaning">
-            <h2 class="text-2xl font-bold text-brand-dark mb-3">3. الخطوات الهندسية للتنظيف العميق الآمن</h2>
+            <h2 id="part-3" class="text-2xl font-bold text-brand-dark mb-3">3. الخطوات الهندسية للتنظيف العميق الآمن</h2>
             <p class="mb-4">
               إذا كنت تستعين بفني متخصص أو ترغب في فهم كيفية تنفيذ الخدمة السليمة في منزلك، فهذه هي المراحل المعتمدة لدى
               شركة إير كول:
@@ -255,7 +306,7 @@
           </section>
 
           <section id="diy-vs-professional">
-            <h2 class="text-2xl font-bold text-brand-dark mb-3">4. متى يمكنك التنظيف بنفسك ومتى تطلب فني متخصص؟</h2>
+            <h2 id="part-4" class="text-2xl font-bold text-brand-dark mb-3">4. متى يمكنك التنظيف بنفسك ومتى تطلب فني متخصص؟</h2>
             <p class="mb-3">
               <strong>بإمكانك تنظيف الفلاتر المنزلية بنفسك:</strong> كل ما عليك هو فتح الوجه البلاستيكي للمكيف، سحب
               الفلترين وغسلهما تحت صنبور ماء فاتر بصابون خفيف وتركهما ليجفا تماماً في الظل قبل إعادتهما.
@@ -269,6 +320,121 @@
                 بجدة</a>.
             </p>
           </section>
+
+          <section>
+            <h2 id="part-5" class="text-2xl font-bold text-brand-dark mb-3">5. جدول تنظيف المكيف في جدة حسب نوع الاستخدام</h2>
+            <p class="mb-3">لا يوجد موعد واحد يناسب كل البيوت؛ عدد ساعات التشغيل، وقرب البيت من البحر أو الطرق الترابية، ووجود مدخنين أو حيوانات أليفة، كلها عوامل تغيّر سرعة اتساخ المكيف. هذا جدول عملي نعتمد عليه في زياراتنا داخل جدة:</p>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 my-4">
+              <table class="w-full text-right text-xs sm:text-sm">
+                <caption class="sr-only">جدول مواعيد تنظيف المكيف في جدة</caption>
+                <thead class="bg-brand-dark text-white"><tr><th scope="col" class="p-3 font-bold">الجزء أو الحالة</th><th scope="col" class="p-3 font-bold">الموعد المقترح</th><th scope="col" class="p-3 font-bold">ملاحظة</th></tr></thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                  <tr><td class="p-3 font-bold text-brand-dark">فلاتر الوحدة الداخلية</td><td class="p-3">كل 2 إلى 3 أسابيع</td><td class="p-3">تُغسل بالماء الفاتر وتجفف في الظل</td></tr>
+                  <tr class="bg-slate-50"><td class="p-3 font-bold text-brand-dark">الغسيل العميق للمبخر وحوض الصرف</td><td class="p-3">مرتين في السنة</td><td class="p-3">قبل الصيف (مارس - أبريل) وفي منتصفه (يوليو - أغسطس)</td></tr>
+                  <tr><td class="p-3 font-bold text-brand-dark">الوحدة الخارجية (المكثف)</td><td class="p-3">مرة إلى مرتين سنوياً</td><td class="p-3">أكثر في البيوت القريبة من البحر بسبب الأملاح</td></tr>
+                  <tr class="bg-slate-50"><td class="p-3 font-bold text-brand-dark">بيوت فيها مدخنون أو حيوانات أليفة</td><td class="p-3">غسيل كل 4 أشهر</td><td class="p-3">مع تعقيم لإزالة الروائح</td></tr>
+                  <tr><td class="p-3 font-bold text-brand-dark">المحلات والمطاعم والمكاتب</td><td class="p-3">كل 3 إلى 4 أشهر</td><td class="p-3">التشغيل الطويل يضاعف تراكم الأوساخ</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 id="part-6" class="text-2xl font-bold text-brand-dark mb-3">6. طريقة تنظيف فلتر المكيف بنفسك خطوة بخطوة</h2>
+            <p class="mb-3">تنظيف الفلتر هو أسهل شيء تقدر تعمله بنفسك، وأكثر شيء يحافظ على قوة التبريد بين زيارات الغسيل:</p>
+            <ol class="list-decimal list-inside space-y-2 pr-2">
+              <li>افصل المكيف من الريموت ثم من القاطع الكهربائي.</li>
+              <li>ارفع الوجه الأمامي للوحدة الداخلية من الأسفل للأعلى حتى يثبت.</li>
+              <li>اسحب الفلترين للأسفل برفق دون ثني الإطار البلاستيكي.</li>
+              <li>انفض الغبار الجاف أولاً، ثم اغسلهما بماء فاتر وصابون خفيف من الخلف للأمام.</li>
+              <li>اتركهما يجفان تماماً في الظل؛ الشمس المباشرة قد تشوه البلاستيك.</li>
+              <li>أعد الفلاتر وأغلق الوجه وشغّل المكيف.</li>
+            </ol>
+            <p class="text-xs sm:text-sm text-slate-500 mt-3">تحذير: لا ترش ماء داخل المكيف نفسه ولا تستخدم مواد كلور أو منظفات قوية على زعانف المبخر؛ هذا عمل الفني بمعدات العزل.</p>
+          </section>
+
+          <section>
+            <h2 id="part-7" class="text-2xl font-bold text-brand-dark mb-3">7. تنظيف الوحدة الخارجية في جدة: الغبار والأملاح</h2>
+            <p class="mb-3">الوحدة الخارجية هي المسؤولة عن طرد حرارة البيت. في جدة تتعرض على الأسطح والواجهات لغبار كثيف وأملاح بحرية تلتصق بزعانف المكثف، فيرتفع ضغط الدورة ويسخن الكمبروسر ويضعف التبريد حتى لو كانت الوحدة الداخلية نظيفة.</p>
+            <p class="mb-3">علامات اتساخ المكثف: طبقة رمادية على الزعانف من الخلف، صوت الكمبروسر أعلى من المعتاد، والهواء الخارج من الوحدة الخارجية ساخن جداً. يغسل الفني المكثف بالماء من الداخل للخارج عكس اتجاه الهواء حتى يخرج الغبار ولا ينحشر بين الزعانف.</p>
+          </section>
+
+          <section>
+            <h2 id="part-8" class="text-2xl font-bold text-brand-dark mb-3">8. أخطاء شائعة عند تنظيف المكيف في البيت</h2>
+            <ul class="list-disc list-inside space-y-2 pr-2">
+              <li><strong>رش الماء على الكارت الإلكتروني:</strong> يسبب تماساً كهربائياً قد يتلف الكارت بالكامل.</li>
+              <li><strong>استخدام ضغط ماء عالٍ (مثل غسالات السيارات):</strong> يثني زعانف الألمنيوم ويقلل مرور الهواء.</li>
+              <li><strong>تشغيل المكيف بدون فلتر:</strong> يدخل الغبار مباشرة إلى المبخر فيتسخ في أسابيع.</li>
+              <li><strong>بخاخات المعطر:</strong> تغطي الرائحة مؤقتاً لكنها تلتصق بالمبخر وتجذب الغبار أكثر.</li>
+              <li><strong>إهمال خط الصرف:</strong> تنظيف الواجهة فقط مع بقاء حوض الصرف مسدوداً يعني استمرار التنقيط.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 id="part-9" class="text-2xl font-bold text-brand-dark mb-3">9. كم تكلفة تنظيف المكيف في جدة؟</h2>
+            <p class="mb-3">تختلف التكلفة حسب عدد المكيفات ونوعها. هذه الأسعار المعتمدة لدى إير كول لمكيفات السبليت:</p>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200 my-4">
+              <table class="w-full text-right text-xs sm:text-sm">
+                <caption class="sr-only">أسعار تنظيف المكيفات في جدة</caption>
+                <thead class="bg-brand-dark text-white"><tr><th scope="col" class="p-3 font-bold">عدد المكيفات</th><th scope="col" class="p-3 font-bold">السعر للمكيف</th></tr></thead>
+                <tbody class="divide-y divide-slate-100 bg-white">
+                  <tr><td class="p-3 font-bold text-brand-dark">مكيف واحد</td><td class="p-3">150 ريال</td></tr>
+                  <tr class="bg-slate-50"><td class="p-3 font-bold text-brand-dark">2 إلى 3 مكيفات</td><td class="p-3">120 ريال</td></tr>
+                  <tr><td class="p-3 font-bold text-brand-dark">4 إلى 7 مكيفات</td><td class="p-3">100 ريال</td></tr>
+                  <tr class="bg-slate-50"><td class="p-3 font-bold text-brand-dark">8 مكيفات فأكثر</td><td class="p-3">80 ريال</td></tr>
+                  <tr><td class="p-3 font-bold text-brand-dark">غسيل + تعقيم</td><td class="p-3">140 ريال</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-3">للتفاصيل والحجز وحاسبة التكلفة، راجع صفحة <a href="/ac-cleaning-jeddah/" class="text-brand-blue underline font-bold">تنظيف مكيفات بجدة</a>.</p>
+          </section>
+
+          <section id="faq-article">
+            <h2 id="part-10" class="text-2xl font-bold text-brand-dark mb-3">10. أسئلة شائعة</h2>
+            <div class="space-y-3">
+              <details class="group bg-slate-50 rounded-xl border border-slate-200 p-4 open:border-brand-blue">
+                <summary class="font-bold text-brand-dark cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span>كم مرة أنظف المكيف في جدة؟</span><span class="text-brand-blue group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600">نظّف الفلاتر كل 2 إلى 3 أسابيع، واطلب غسيلاً عميقاً متخصصاً مرتين في السنة: قبل الصيف وفي منتصفه، بسبب الرطوبة والغبار في جدة.</p>
+              </details>
+              <details class="group bg-slate-50 rounded-xl border border-slate-200 p-4 open:border-brand-blue">
+                <summary class="font-bold text-brand-dark cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span>هل أقدر أغسل المكيف بنفسي؟</span><span class="text-brand-blue group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600">تقدر تنظف الفلاتر والوجه البلاستيكي بنفسك. أما غسيل المبخر وحوض الصرف فيحتاج كيس عزل ومضخة بضغط مناسب وحماية للكارت، وهذا عمل فني متخصص.</p>
+              </details>
+              <details class="group bg-slate-50 rounded-xl border border-slate-200 p-4 open:border-brand-blue">
+                <summary class="font-bold text-brand-dark cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span>لماذا يخرج من المكيف رائحة بعد الغسيل؟</span><span class="text-brand-blue group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600">غالباً بسبب بقاء ترسبات عضوية داخل حوض الصرف أو المبخر. الحل هو التعقيم بعد الغسيل لإزالة الطبقة المسببة للرائحة.</p>
+              </details>
+              <details class="group bg-slate-50 rounded-xl border border-slate-200 p-4 open:border-brand-blue">
+                <summary class="font-bold text-brand-dark cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span>هل تنظيف المكيف يقلل فاتورة الكهرباء؟</span><span class="text-brand-blue group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600">نعم، المبخر والمكثف النظيفان ينقلان الحرارة أسرع، فيصل المكيف للحرارة المطلوبة ويفصل الكمبروسر أبكر، فيقل الاستهلاك.</p>
+              </details>
+              <details class="group bg-slate-50 rounded-xl border border-slate-200 p-4 open:border-brand-blue">
+                <summary class="font-bold text-brand-dark cursor-pointer list-none flex items-center justify-between gap-3">
+                  <span>كم سعر غسيل المكيف السبليت في جدة؟</span><span class="text-brand-blue group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p class="mt-3 pt-3 border-t border-slate-200 text-slate-600">يبدأ من 150 ريال للمكيف الواحد، ويقل السعر عند تعدد المكيفات حتى 80 ريال للمكيف عند 8 مكيفات فأكثر.</p>
+              </details>
+            </div>
+          </section>
+
+          <aside class="p-6 rounded-2xl border border-slate-200 bg-brand-light">
+            <h2 class="text-lg font-bold text-brand-dark mb-3">اقرأ أيضاً وخدمات ذات صلة</h2>
+            <ul class="space-y-2 text-sm">
+              <li><a href="/ac-cleaning-jeddah/" class="text-brand-blue hover:underline font-semibold">خدمة تنظيف مكيفات بجدة بالأسعار</a></li>
+              <li><a href="/ac-sanitization-jeddah/" class="text-brand-blue hover:underline font-semibold">تعقيم مكيفات بجدة وإزالة الروائح</a></li>
+              <li><a href="/blog/ac-maintenance-guide-jeddah/" class="text-brand-blue hover:underline font-semibold">دليل أعطال المكيفات في جدة</a></li>
+              <li><a href="/window-ac-jeddah/" class="text-brand-blue hover:underline font-semibold">صيانة وتنظيف مكيفات الشباك بجدة</a></li>
+            </ul>
+          </aside>
+
 
           <!-- Article CTA Box -->
           <div
@@ -295,6 +461,7 @@
       <div class="flex gap-4">
         <a href="https://aircoolsa.com/" class="hover:text-white">الرئيسية</a>
         <a href="/services/" class="hover:text-white">الخدمات</a>
+        <a href="/ac-technician-jeddah/" class="hover:text-white">فني مكيفات بجدة</a>
         <a href="/blog/" class="hover:text-white">المدونة</a>
         <a href="/contact/" class="hover:text-white">تواصل معنا</a>
       </div>

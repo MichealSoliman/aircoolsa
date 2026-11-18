@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="overflow-x-hidden" class="scroll-smooth">
+<html lang="ar" dir="rtl" class="scroll-smooth overflow-x-hidden">
 
 <head>
   <meta charset="UTF-8">
@@ -168,8 +168,11 @@
           </div>
 
           <div class="lg:col-span-6">
-            <img src="/assets/images/ac-team.jpg" alt="فريق عمل شركة إير كول للمكيفات في جدة" width="700" height="420"
+            <picture>
+              <source srcset="/assets/images/ac-team.webp" type="image/webp">
+              <img fetchpriority="high" decoding="async" src="/assets/images/ac-team.jpg" alt="فريق عمل شركة إير كول للمكيفات في جدة" width="700" height="420"
               class="rounded-3xl shadow-card border border-slate-100 object-cover w-full h-auto">
+            </picture>
           </div>
 
         </div>

@@ -11,7 +11,7 @@
   <!-- الصفحات الأساسية -->
   <url>
     <loc>https://aircoolsa.com/services/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -49,7 +49,7 @@
   </url>
   <url>
     <loc>https://aircoolsa.com/ac-maintenance-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -61,7 +61,7 @@
   </url>
   <url>
     <loc>https://aircoolsa.com/ac-sanitization-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -78,34 +78,53 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://aircoolsa.com/ac-technician-jeddah/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aircoolsa.com/central-ac-jeddah/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aircoolsa.com/window-ac-jeddah/</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- المقالات والأدلة الفنية -->
   <url>
     <loc>https://aircoolsa.com/blog/choosing-ac-company-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aircoolsa.com/blog/ac-cleaning-guide-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://aircoolsa.com/blog/ac-maintenance-guide-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://aircoolsa.com/blog/ac-gas-refilling-guide-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://aircoolsa.com/blog/ac-copper-piping-guide-jeddah/</loc>
-    <lastmod>2026-11-12</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
